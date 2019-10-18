@@ -1,0 +1,18 @@
+
+{% load tz %}
+{% load l10n %}
+{% load i18n %}
+{% load graph_extras %}
+
+<h1>{% trans "Forecast"%}</h1>
+
+{% for span_list in location_span_list %}
+    <!--<h4>{% trans span.prediction_type.name|capfirst %}</h4>-->
+    <div id="chart{{ span_list.0.prediction_type.name }}"></div>
+    {% for prediction in span.predictions %}
+    <!--<a class="badge badge-light" href="/date/{{ prediction.get_slug }}">[{{ prediction.date.get_hour }}:00] </a>-->
+    {% endfor %}
+
+    {% graph_for_future span_list "red" %}
+
+{% endfor %}

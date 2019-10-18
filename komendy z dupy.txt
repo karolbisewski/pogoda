@@ -1,0 +1,8 @@
+https://gist.github.com/SeppPenner/6a5a30ebc8f79936fa136c524417761d
+https://raspberrypi.stackexchange.com/questions/99621/python3-7-with-numpy-on-raspbian
+
+sudo pip3.7 uninstall numpy
+sudo apt-get install libatlas-base-dev
+# sudo python3.7 -m pip install 'numpy>1.0, <1.15' --force-reinstall
+ # nie pip, bo tam za nowe takiety
+sudo apt install python3-numpy

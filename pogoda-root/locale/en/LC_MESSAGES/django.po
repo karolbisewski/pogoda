@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-28 11:06+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\pages\templates\home.html:6
+msgid "Subpages"
+msgstr ""
+
+#: .\pages\templates\home.html:7
+msgid "Dates"
+msgstr ""
+
+#: .\pages\templates\home.html:8
+msgid "Admin"
+msgstr ""
+
+#: .\pages\templates\home.html:9
+#: .\pogodynka\templates\complete-standard-future.html:7
+msgid "Forecast"
+msgstr ""
+
+#: .\pages\views.py:8
+msgid "Forecaster"
+msgstr ""
+
+#: .\pogoda\settings.py:117
+msgid "Polish"
+msgstr ""
+
+#: .\pogoda\settings.py:118
+msgid "English"
+msgstr ""
+
+#: .\pogodynka\actuall_view.py:51
+msgid "Prognoza - Pogodynka"
+msgstr ""
+
+#: .\pogodynka\actuall_view.py:63
+msgid "temperature"
+msgstr ""
+
+#: .\pogodynka\actuall_view.py:64
+msgid "flux"
+msgstr ""
+
+#: .\pogodynka\actuall_view.py:65
+msgid "wind_speed"
+msgstr ""
+
+#: .\pogodynka\actuall_view.py:66
+msgid "wind_u"
+msgstr ""
+
+#: .\pogodynka\actuall_view.py:67
+msgid "wind_v"
+msgstr ""
+
+#: .\pogodynka\templates\date_detail.html:8
+msgid "Back"
+msgstr ""
+
+#: .\pogodynka\templates\date_detail.html:9
+msgid "Forecast for "
+msgstr ""
+
+#: .\pogodynka\templates\dates.html:9
+msgid "All dates"
+msgstr ""
+
+#: .\pogodynka\views.py:24
+msgid "History - Forecaster"
+msgstr ""
+
+#: .\pogodynka\views.py:48
+#, python-brace-format
+msgid "Historia dla {day_stamp.get_slug} - Pogodynka"
+msgstr ""
+
+#: .\templates\base.html:32
+msgid "Pogodynka"
+msgstr ""

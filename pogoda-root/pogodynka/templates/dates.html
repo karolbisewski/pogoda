@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load tz %}
+{% load l10n %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+
+<h1>{% trans "All dates" %}</h1>
+
+<div class="row" style="height:3em;">
+    <div class="col">
+        <div class="controls">
+            <form autocomplete="off">
+                <input id="my-picker" class="datepicker form-control" type="text" autocomplete="off"/>
+            </form>
+        </div>
+    </div>
+    <div class="col">
+        <button type="button" class="btn btn-outline-secondary" onclick="replace_dates();show_graphs()"> {% trans "Search" %}
+        </button>
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="form-check form-check-inline">
+            {% for type in prediction_types %}
+            <div class="checkbox">
+                <input id="checkbox{{ type.name }}" type="checkbox" {% if type.name in pre_checked_names %}  checked {% endif%}>
+                <label for="checkbox{{ type.name }}" >
+                    {% trans type.name %}
+
+                </label>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+<div id="dates-container"></div>
+<div id="graphs-container"></div>
+
+<script src="{% static 'pogodynka/picker.js' %}"></script>
+<script type="text/javascript">
+ $('.datepicker').datepicker({
+     weekStart:1,
+     color: 'red'
+ });
+
+
+function replace_dates() {
+    let date_to_request = $('.datepicker').val();
+    let url = "/api/date/" + date_to_request;
+    $.ajax({
+        url: url,
+        method: "GET",
+        contentType: "application/json",
+        dataType: "json",
+    }).done(function(res) {
+        ans = [];
+
+        for (var i = 0; i < res.length; i++) {
+            var d = new Date(res[i]);
+            ans.push('<a class="badge badge-light" href="/date/' + d.getFullYear() + "-" + ( d.getMonth() + 1) + "-" + d.getDate() + '/' + d.getHours() + '">'
+                            + d.getHours() + ":00" +
+                    '</a>');
+        }
+
+        $('#dates-container').html(ans.join(""));
+
+    });
+    }
+function show_graphs() {
+    let type_names = [{% for type in prediction_types %} '{{type.name}}', {% endfor %}];
+    let checked = [];
+    for (var i = 0; i < type_names.length; i++) {
+        var checkbox_name = "checkbox" + type_names[i];
+        if (document.getElementById(checkbox_name).checked == true) {
+            checked.push(type_names[i]);
+        }
+    }
+    checked_as_string = checked.join(",")
+    let date_to_request = $('.datepicker').val();
+    let url = "/api/future-graph/" + date_to_request + "/0/" + checked_as_string;
+    $.ajax({
+        url: url,
+        method: "GET",
+        contentType: "application/json",
+        dataType: "html",
+    }).done(function (res) {
+       $('#graphs-container').html(res);
+    });
+}
+
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,101 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-28 11:27+0200\n"
+"PO-Revision-Date: 2019-07-28 11:27+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Poedit 2.2.3\n"
+
+#: .\pages\templates\home.html:6
+msgid "Subpages"
+msgstr "Podstrony"
+
+#: .\pages\templates\home.html:7
+msgid "Dates"
+msgstr "Daty"
+
+#: .\pages\templates\home.html:8
+msgid "Admin"
+msgstr "Admin"
+
+#: .\pages\templates\home.html:9
+#: .\pogodynka\templates\complete-standard-future.html:7
+msgid "Forecast"
+msgstr "Prognoza"
+
+#: .\pages\views.py:8
+msgid "Forecaster"
+msgstr "Progodynka"
+
+#: .\pogodynka\actuall_view.py:51
+msgid "Prognoza - Pogodynka"
+msgstr "Prognoza - Pogodynka"
+
+#: .\pogodynka\actuall_view.py:63 .\pogodynka\api_views.py:33
+#: .\templates\base.html:36
+msgid "temperature"
+msgstr "temperatura"
+
+#: .\pogodynka\actuall_view.py:64
+msgid "flux"
+msgstr "nasłonecznienie"
+
+#: .\pogodynka\actuall_view.py:65
+msgid "wind_speed"
+msgstr "prędkość wiatru"
+
+#: .\pogodynka\actuall_view.py:66
+msgid "wind_u"
+msgstr "wiatr wschodni"
+
+#: .\pogodynka\actuall_view.py:67
+msgid "wind_v"
+msgstr "wiatr północny"
+
+#: .\pogodynka\templates\date_detail.html:8
+msgid "Back"
+msgstr "Powrót"
+
+#: .\pogodynka\templates\date_detail.html:9
+msgid "Forecast for "
+msgstr "Prognoza na dzień "
+
+#: .\pogodynka\templates\dates.html:9
+msgid "All dates"
+msgstr "Wszystkie daty"
+
+#: .\pogodynka\views.py:26
+msgid "History - Forecaster"
+msgstr "Historia - Pogodynka"
+
+#: .\pogodynka\views.py:50
+#, python-brace-format
+msgid "Historia dla {day_stamp.get_slug} - Pogodynka"
+msgstr "Historia dla {day_stamp.get_slug} - Pogodynka"
+
+#: .\templates\base.html:32
+msgid "Pogodynka"
+msgstr "Pogodynka"
+
+#~ msgid "Polish"
+#~ msgstr "Polski"
+
+#~ msgid "English"
+#~ msgstr "Angielski"
+
+#~ msgid "back"
+#~ msgstr "powrót"

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load tz %}
+{% load l10n %}
+{% load i18n %}
+{% load graph_extras %}
+{% block content %}
+    <a href="/dates/">{% trans "Back" %}</a>
+    <h1>{% trans "Forecast for " %}<strong>{{ object.get_day}}.{{ object.get_month }}.{{ object.get_year }}</strong>
+        {{ object.get_hour }}:00!</h1>
+    {% for loc_num in num_of_location %}
+        <ul>
+            <!--<h3>{{span.type.name}}</h3>-->
+            <!--{% for pred in span.predictions %}-->
+            <!--<li>{{pred.get_when.day}}.{{pred.get_when.month}}.{{pred.get_when.year}} {{pred.get_when.hour}}:00 ->-->
+                <!--<strong>{{pred.value}}</strong> {{ span.type.unit|safe }}-->
+            <!--</li>-->
+            <!--{% endfor %}-->
+            <div id="chart{{ span_list.0.prediction_type.name }}"></div>
+        </ul>
+        {% graph_for_data span_list "red" %}
+    {% endfor %}
+
+{% endblock %}

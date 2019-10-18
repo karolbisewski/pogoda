@@ -1,0 +1,44 @@
+{% load l10n %}
+{% load i18n %}
+<div id="chart{{ prediction_type.name }}"></div>
+<script>
+     {% for location, predictions, color in location_and_predictions %}
+    // {{location_list}}
+    // {{location_list.loc_num}}
+    var {{ prediction_name }}_{{ location }}_links = [{% for pred in predictions %} '/date/{{ pred.date.get_slug }}' , {% endfor %}];
+    var {{ prediction_name }}_{{ location }} = {
+      x: [{% for pred in predictions %} '{{pred.date.get_hour}}:00' , {% endfor %}],
+      y: [{% for pred in predictions %}
+          {{pred.value|unlocalize}} ,
+      {% endfor %}],
+
+      type: "scatter",
+      mode: "lines+marker",
+      name: '{{ location }}',
+
+      line: {color: '{{ color }}'}
+    };
+     {% endfor %}
+    var layout = {
+      title: '{% trans prediction_name|title %} <b> {{ prediction_type.unit|safe }} </b>',
+
+
+      yaxis: {
+        autorange: true,
+        range: [-10, 40],
+        type: 'scatter'
+      }
+    };
+
+    var data = [
+        {% for location in location_list %}
+            {{ prediction_name }}_{{ location }},
+        {% endfor %}
+        ];
+    var pl = Plotly.newPlot('chart{{ prediction_name }}', data, layout);
+    document.getElementById('chart{{ prediction_name }}').on('plotly_click', function (data) {
+        window.location.href = {{ prediction_name }}{{ location }}_links[data.points[0].pointIndex];
+        });
+
+
+</script>

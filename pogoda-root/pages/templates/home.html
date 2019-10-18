@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load i18n %}
+
+{% block content %}
+
+<h1>{% trans "Subpages" %}</h1>
+<h3>- <a href="/dates/">{% trans "Dates" %}</a></h3>
+<h3>- <a href="/admin/">{% trans "Admin" %}</a></h3>
+<h3>- <a href="/future/">{% trans "Forecast" %}</a></h3>
+
+<div class="row" style="height:3em;">
+
+    <div class="col">
+        <div>
+            Prędość wiatru: <strong id="wind-speed-val"></strong>
+            <canvas id="wind-speed" data-type="radial-gauge"
+                    data-width="300"
+                    data-height="300"
+                    data-units="Km/h"
+                    data-min-value="0"
+                    data-max-value="220"
+                    data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
+                    data-minor-ticks="2"
+                    data-stroke-ticks="true"
+                    data-highlights='[
+        {"from": 160, "to": 220, "color": "rgba(200, 50, 50, .75)"}
+    ]'
+                    data-color-plate="#fff"
+                    data-border-shadow-width="0"
+                    data-borders="false"
+                    data-needle-type="arrow"
+                    data-needle-width="2"
+                    data-needle-circle-size="7"
+                    data-needle-circle-outer="true"
+                    data-needle-circle-inner="false"
+                    data-animation-duration="1500"
+                    data-animation-rule="linear"
+            ></canvas>
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            Kierunek wiatru: <strong id="wind-dir-val"></strong>
+
+            <canvas id="wind-dir" data-type="radial-gauge"
+                    data-min-value="0"
+                    data-max-value="360"
+                    data-major-ticks="N,NE,E,SE,S,SW,W,NW,N"
+                    data-minor-ticks="22"
+                    data-ticks-angle="360"
+                    data-start-angle="180"
+                    data-stroke-ticks="false"
+                    data-highlights="false"
+                    data-color-plate="#a33"
+                    data-color-major-ticks="#f5f5f5"
+                    data-color-minor-ticks="#ddd"
+                    data-color-numbers="#ccc"
+                    data-color-needle="rgba(240, 128, 128, 1)"
+                    data-color-needle-end="rgba(255, 160, 122, .9)"
+                    data-value-box="false"
+                    data-value-text-shadow="false"
+                    data-color-circle-inner="#fff"
+                    data-color-needle-circle-outer="#ccc"
+                    data-needle-circle-size="15"
+                    data-needle-circle-outer="false"
+                    data-animation-rule="linear"
+                    data-needle-type="line"
+                    data-needle-start="75"
+                    data-needle-end="99"
+                    data-needle-width="3"
+                    data-borders="true"
+                    data-border-inner-width="0"
+                    data-border-middle-width="0"
+                    data-border-outer-width="10"
+                    data-color-border-outer="#ccc"
+                    data-color-border-outer-end="#ccc"
+                    data-color-needle-shadow-down="#222"
+                    data-border-shadow-width="0"
+                    data-animation-target="plate"
+                    data-animation-duration="1500"
+                    data-value="45.5"
+                    data-animate-on-init="true"
+            ></canvas>
+        </div>
+    </div>
+    <div class="col">
+        <div>
+            Nasłonecznienie: <strong id="flux-val"></strong>
+            <canvas id="flux"></canvas>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.5/all/gauge.min.js"></script>
+<script src="{% static 'pogoda/gauge.min.js' %}"></script>
+
+<script>
+
+    var optsFlux = {
+        angle: -0.01, // The span of the gauge arc
+        lineWidth: 0.7, // The line thickness
+        radiusScale: 1, // Relative radius
+        pointer: {
+            length: 0.61, // // Relative to gauge radius
+            strokeWidth: 0.026, // The thickness
+            color: '#000000' // Fill color
+        },
+        limitMax: false,     // If false, max value increases automatically if value > maxValue
+        limitMin: false,     // If true, the min value of the gauge will be fixed
+        colorStart: '#C2C2C2',   // Colors
+        colorStop: '#EDF518',    // just experiment with them
+        strokeColor: '#E0E0E0',  // to see which ones work best for you
+        generateGradient: true,
+        highDpiSupport: true,     //  // High resolution support
+
+    };
+    var gaugeSpeed = new RadialGauge({
+        renderTo: 'wind-speed',
+        width: 300,
+        height: 300,
+        units: "Km/h",
+        minValue: 0,
+        maxValue: 220,
+        majorTicks: [
+            "0",
+            "20",
+            "40",
+            "60",
+            "80",
+            "100",
+            "120",
+            "140",
+            "160",
+            "180",
+            "200",
+            "220"
+        ],
+        minorTicks: 2,
+        strokeTicks: true,
+        highlights: [
+            {
+                "from": 160,
+                "to": 220,
+                "color": "rgba(200, 50, 50, .75)"
+            }
+        ],
+        colorPlate: "#fff",
+        borderShadowWidth: 0,
+        borders: false,
+        needleType: "arrow",
+        needleWidth: 2,
+        needleCircleSize: 7,
+        needleCircleOuter: true,
+        needleCircleInner: false,
+        animationDuration: 1500,
+        animationRule: "linear"
+    }).draw();
+    var gaugeFlux = new Gauge(document.getElementById('flux')).setOptions(optsFlux); // create sexy gauge!
+
+
+    gaugeFlux.maxValue = 50; // set max gauge value
+    gaugeFlux.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+    gaugeFlux.animationSpeed = 128; // set animation speed (32 is default value)
+    gaugeFlux.set(25); // s
+
+    var gaugeDir = new RadialGauge({
+        renderTo: 'wind-dir',
+        minValue: 0,
+        maxValue: 360,
+        majorTicks: [
+            "N",
+            "NE",
+            "E",
+            "SE",
+            "S",
+            "SW",
+            "W",
+            "NW",
+            "N"
+        ],
+        minorTicks: 22,
+        ticksAngle: 360,
+        startAngle: 180,
+        strokeTicks: false,
+        highlights: false,
+        colorPlate: "#a33",
+        colorMajorTicks: "#f5f5f5",
+        colorMinorTicks: "#ddd",
+        colorNumbers: "#ccc",
+        colorNeedle: "rgba(240, 128, 128, 1)",
+        colorNeedleEnd: "rgba(255, 160, 122, .9)",
+        valueBox: false,
+        valueTextShadow: false,
+        colorCircleInner: "#fff",
+        colorNeedleCircleOuter: "#ccc",
+        needleCircleSize: 15,
+        needleCircleOuter: false,
+        animationRule: "linear",
+        needleType: "line",
+        needleStart: 75,
+        needleEnd: 99,
+        needleWidth: 3,
+        borders: true,
+        borderInnerWidth: 0,
+        borderMiddleWidth: 0,
+        borderOuterWidth: 10,
+        colorBorderOuter: "#ccc",
+        colorBorderOuterEnd: "#ccc",
+        colorNeedleShadowDown: "#222",
+        borderShadowWidth: 0,
+        animationTarget: "plate",
+        animationDuration: 1500,
+        value: 45.5,
+        animateOnInit: true
+    }).draw();
+</script>
+<script>
+    function get_readings() {
+        console.log("starting...");
+        $.ajax({
+            url: window.location.origin + "/api/live_readings",
+            method: "GET",
+            contentType: "application/json",
+            dataType: "json",
+        }).done(function (data) {
+            console.log("reading...");
+            console.log(data);
+
+            $('#wind-speed-val').html(Math.round(data.wind_speed * 3.6));
+            gaugeSpeed.value = Math.round(data.wind_speed * 3.6);
+
+            $('#wind-dir-val').html(data.wind_dir);
+            gaugeDir.value = data.wind_dir;
+
+            $('#flux-val').html(data.flux);
+            gaugeFlux.set(parseInt(data.flux));
+
+            setTimeout(function () {
+                get_readings()
+            }, 69);
+        })
+    };
+    $(document).ready(function () {
+        get_readings();
+    });
+
+
+    // let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    // var prediction_socket = new ReconnectingWebSocket(ws_scheme, +'://' + window.location.host + "/station_live");
+    // prediction_socket.onmessage = function (message) {
+    //     var data = JSON.parse(message.data)
+    //
+    // }
+</script>
+{% endblock %}

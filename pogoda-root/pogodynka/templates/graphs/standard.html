@@ -1,0 +1,39 @@
+{% load l10n %}
+{% load i18n %}
+<div id="chart{{ prediction_type.name }}"></div>
+<script>
+
+    {% for loc_num in num_of_location %}
+        var {{ prediction_name }}{{ location_list[loc_num] }} = {
+          x: [{% for pred in predictions[loc_num] %}
+                 '{{pred.get_when.year}}-{{pred.get_when.month}}-{{pred.get_when.day}} {{pred.get_when.hour}}:00:00' ,
+              {% endfor %}],
+          y: [{% for pred in predictions[loc_num] %}
+                  {{pred.value|unlocalize}} ,
+              {% endfor %}],
+          type: "scatter",
+          mode: "lines+marker",
+          name: 'Temp',
+
+          line: {color: '{{ colors[{{ loc_num }}] }}'}
+        };
+
+        var layout = {
+          title: '{% trans prediction_name|title %} <b> {{ prediction_type.unit|safe }} </b>',
+
+          yaxis: {
+            autorange: true,
+            range: [-10, 40],
+            type: 'scatter'
+          }
+        };
+    {% endfor %}
+    var data = [
+        {% for loc_num in num_of_location %}
+            {{ prediction_name }}{{ location_list[loc_num] }},
+        {% endfor %}
+        ];
+
+    Plotly.newPlot('chart{{ prediction_name }}', data, layout);
+
+</script>
